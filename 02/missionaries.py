@@ -15,14 +15,14 @@ def check_valid(
     m_left, c_left, boat_position = state
     m_right = max_missionaries - m_left
     c_right = max_cannibals - c_left
-    
+
     return (
         m_left >= 0
         and c_left >= 0
         and m_right >= 0
         and c_right >= 0
-        and (m_left==0 or m_left>=c_left)
-        and (m_right==0 or m_right>=c_right)
+        and (m_left == 0 or m_left >= c_left)
+        and (m_right == 0 or m_right >= c_right)
     )
 
 
@@ -172,7 +172,7 @@ def gen_astar(
                 parent_map[nextStateTuple] = state
                 f_score = heuristic_fn(nextState) + new_gscore
                 heapq.heappush(open_list, (f_score, nextStateTuple))
-    
+
     return []
 
 
@@ -185,11 +185,11 @@ def astar_h1(
     This function must return path obtained and a boolean which says if the heuristic chosen satisfes Monotone restriction property while exploring or not.
     """
     path = gen_astar(init_state, final_state, max_missionaries, max_cannibals, h1)
-    
+
     # abs(h1-h2) = abs((c1+m1)-(c2+m2)) <= abs(c1-m1) + abs(c2-m2)
     # cost = abs(c1-m1) + abs(c2-m2)
     # Henec abs(h1-h2)<=cost ie MONOTONE
-    
+
     is_monotone = True
 
     return path, is_monotone
@@ -204,10 +204,10 @@ def astar_h2(
     """
     path = gen_astar(init_state, final_state, max_missionaries, max_cannibals, h2)
     is_monotone = True
-    
+
     # abs(h1-h2) = abs(m1-m2) = abs((c1-m1) - (c2-m2)) <= abs(c1-m1) + abs(c2-m2)
     # cost = abs(c1-m1) + abs(c2-m2)
-    # Henec abs(h1-h2)<=cost ie MONOTONE 
+    # Henec abs(h1-h2)<=cost ie MONOTONE
 
     return path, is_monotone
 
@@ -221,11 +221,11 @@ def astar_h3(
     """
     path = gen_astar(init_state, final_state, max_missionaries, max_cannibals, h3)
     is_monotone = True
-    
+
     # abs(h1-h2) = abs(c1-c2) = abs((m1-c1) - (m2-c2)) <= abs(c1-m1) + abs(c2-m2)
     # cost = abs(c1-m1) + abs(c2-m2)
-    # Henec abs(h1-h2)<=cost ie MONOTONE 
-    
+    # Henec abs(h1-h2)<=cost ie MONOTONE
+
     return path, is_monotone
 
 
